@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# dotfile install script
+
+[ -d "~/.config/nvim" ] && cp init.vim ~/.config/nvim/init.vim || mkdir ~/.config/nvim && cp init.vim ~/.config/nvim/init.vim
+cp config.neomuttrc ~/.neomuttrc
+mkdir ~/.mutt
+echo 'Make sure to setup neomutt with your email account!'
+
+echo 'Installing vim-plug. [ret] to continue.'
+read
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+nvim -c 'PlugInstall' \
+	 -c 'qa!'
+echo 'Installed dotfiles!'
