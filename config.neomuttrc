@@ -1,4 +1,4 @@
-source ~/.mutt/4tl0renz0.muttrc
+source ~/.mutt/4tl0renz0.neomuttrc
 
 source "~/.mutt/colors.muttrc"
 
@@ -33,11 +33,6 @@ hdr_order date from to cc subject
 bind index G imap-fetch-mail
 
 # git apply patch macros
-macro index ,t '<tag-prefix><pipe-entry>~/hydra/scripts/mail-to-mbox<return>'  "Dumps tagged patches into patch-queue"
-macro index ,a '<tag-prefix><pipe-entry>~/hydra/scripts/git-apply-incoming<return>'  "Apply patches in patch queue"
-macro index ,g '<tag-prefix><pipe-entry>~/hydra/scripts/git-apply<return>'  "Apply patches"
-macro index ,r '<pipe-entry>rm -f ~/incoming/*.mbox<return>'  "Nukes all ~/incoming/"
-macro index ,p '<pipe-entry>ls -ltr ~/incoming/<return>'  "ls -l ~/incoming/"
-macro index ,l '| git am -s'\n
-macro pager ,l '| git am -s'\n
-macro index,pager ,k '| git commit --amend'\n
+macro index ,l '| ~/hydra/scripts/apply_it'\n
+macro pager ,l '| ~/hydra/scripts/apply_it'\n
+macro index,pager ,k '| ./save_patch'\n
