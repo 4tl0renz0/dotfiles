@@ -24,6 +24,10 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 	Plug 'voldikss/vim-floaterm'
 	Plug 'sindrets/diffview.nvim'
 	Plug 'ThePrimeagen/git-worktree.nvim'
+	Plug 'nvim-tree/nvim-tree.lua'
+	Plug 'sam4llis/nvim-tundra'
+	Plug 'nvim-lualine/lualine.nvim'
+	Plug 'vimsence/vimsence'
 call plug#end()
 
 " General
@@ -44,10 +48,54 @@ let g:tokyonight_italic_comments = 1
 let g:tokyonight_italic_functions = 1
 let g:tokyonight_italic_variables = 1
 
-colorscheme tokyonight
+luafile ~/.config/nvim/tundracolors.lua
 
-" Config: Lightline
-let g:lightline = {'colorscheme': 'tokyonight'}
+colorscheme tundra
+
+" Config: Lualine
+lua << END
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+    component_separators = '|',
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
+    }
+  },
+  sections = {
+    lualine_a = { 'mode', separator = { left = '' }, right_padding = 2 },
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}
+END
+
 
 " Config: telescope.nvim
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
@@ -55,26 +103,8 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-" Config: dashboard-nvim
-let g:dashboard_default_executive = 'telescope'
-
-nnoremap <silent> <Leader>fh :DashboardFindHistory<CR>
-nnoremap <silent> <Leader>ff :DashboardFindFile<CR>
-nnoremap <silent> <Leader>tc :DashboardChangeColorscheme<CR>
-nnoremap <silent> <Leader>fa :DashboardFindWord<CR>
-nnoremap <silent> <Leader>fb :DashboardJumpMark<CR>
-nnoremap <silent> <Leader>cn :DashboardNewFile<CR>
-
-let g:dashboard_custom_header = [
-	\ '',
-	\ ' █████╗ ██████╗ ██╗███████╗████████╗ ██████╗ ███╗   ██╗    ',
-	\ '██╔══██╗██╔══██╗██║██╔════╝╚══██╔══╝██╔═══██╗████╗  ██║    ',
-	\ '███████║██████╔╝██║███████╗   ██║   ██║   ██║██╔██╗ ██║    ',
-	\ '██╔══██║██╔══██╗██║╚════██║   ██║   ██║   ██║██║╚██╗██║    ',
-	\ '██║  ██║██║  ██║██║███████║   ██║   ╚██████╔╝██║ ╚████║    ',
-	\ '╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝    ',
-	\ '',
-	\ ]
+" Config: dashboard.nvim
+luafile ~/.config/nvim/dashboardconfig.lua
 
 " Config: Vim-airline
 let g:airline#extensions#tabline#enabled = 1
@@ -154,7 +184,8 @@ augroup nerdtreehidecwd
 	autocmd FileType nerdtree syntax match NERDTreeHideCWD #^[</].*$# conceal
 augroup end
 
-nnoremap <leader>ft :NERDTreeToggle<CR>
+lua require("nvim-tree").setup()
+nnoremap <leader>ft :NvimTreeToggle<CR>
 
 " Config: blamer
 let g:blamer_show_in_visual_modes = 0
@@ -170,3 +201,4 @@ let g:git_messenger_include_diff = 'none'
 let g:git_messenger_floating_win_opts = { 'border': 'single' }
 let g:git_messenger_popup_content_margins = v:false
 let g:git_messenger_always_into_popup = v:true
+

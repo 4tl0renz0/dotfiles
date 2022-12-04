@@ -1,0 +1,26 @@
+[user]
+	email = aristonl@n11.dev
+	name = Ariston Lorenzo
+	signingKey = 
+
+[core]
+	editor = nvim
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+
+[sendemail]
+	smtpserver = mail.n11.dev
+    smtpserverport = 587
+    smtpuser = aristonl@n11.dev
+    smtpPass = 
+    smtpencryption = tls
+[tag]
+	forceSignAnnotated = true
+[commit]
+	gpgSign = true
+[pull]
+	rebase = false

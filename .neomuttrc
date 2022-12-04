@@ -1,0 +1,79 @@
+# source ~/.mutt/4tl0renz0.neomuttrc
+
+# source "~/.mutt/vombatidae.mutt"
+
+# source ~/.config/neomutt/powerline/powerline.neomuttrc
+
+set realname = "Ariston Lorenzo"
+set smtp_url = "smtp://aristonl@n11.dev@mail.n11.dev:587"
+set smtp_pass = ""
+
+set folder = "~/Mail"
+set mbox = "~/Mail"
+set spoolfile = "~/Mail/Inbox"
+
+## ETC
+set send_charset = "us-ascii:utf-8"
+set mail_check = 30
+set move = no
+set imap_keepalive = 900
+set sort = 'reverse-date'
+set editor = "nvim"
+set edit_headers = yes
+set date_format = "%d.%m.%Y %H:%M"
+# Something to sidebar
+set sidebar_short_path
+set sidebar_folder_indent
+set sidebar_width = 10
+set sidebar_divider_char = '|'
+set sidebar_indent_string = ' |_'
+#set sidebar_format = '%B%?F? [%F]?%* %?N?%N/?%S'
+set sidebar_format = "%B %* [%?N?%N / ?%S]"
+set mail_check_stats
+auto_view text/html
+alternative_order text/plain text/enriched text/html
+
+# Patch syntax highlighting                                                    
+color   normal  default           default
+color indicator     white 	  	brightblue
+color status brightwhite brightblue
+
+color header        brightyellow        default             '^Date:'
+color header        brightgreen        	default             '^From:'
+color header        brightgreen         default             '^To:'
+color header        blue        		default             '^Cc:'
+color header		brightwhite			brightblue			'^Subject:'
+
+color index         brightyellow            default         "~U"
+
+color quoted        blue            default         
+color quoted1       cyan            default         
+color quoted2       yellow          default         
+color quoted3       red             default         
+color quoted4       brightred       default  
+
+color   body    brightwhite     default         ^[[:space:]].*                 
+color   body    brightwhite     default         ^(diff).*                      
+color   body    white           default         ^[\-\-\-].*                    
+color   body    white           default         ^[\+\+\+].*                    
+color   body    green           default         ^[\+].*                        
+color   body    red             default         ^[\-].*   
+color	body	brightwhite		default			^[\-\-].*
+color   body    brightblue      default         ^[@@].*                         
+color   body    brightwhite     default         ^(\s).*                        
+color   body    brightblue     default         ^(Signed-off-by).*             
+color   body    brightwhite     default         ^(Cc)  
+
+# Display order
+hdr_order date from to cc subject
+# Notifications
+#set new_mail_command="notify-send --icon='/home/sniffer/Pictures/neomutt.png' \
+'New Email' '%n new messages, %u unread.' &"
+
+bind index G imap-fetch-mail
+
+macro index,pager l '| git am -s'\n
+macro index,pager ,m '| git am -s ~/Mail/aristonl'\n
+macro index,pager ,s '| ~/hydra/scripts/apply_to_stable'\n
+macro index,pager ,e '| nvim ~/Mail/aristonl'\n
+

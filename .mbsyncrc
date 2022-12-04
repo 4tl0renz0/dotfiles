@@ -1,0 +1,28 @@
+Create both
+SyncState *
+
+IMAPAccount n11
+SSLTYPE STARTTLS
+Host mail.n11.dev
+User aristonl@n11.dev
+Pass 
+
+MaildirStore n11-local
+Path ~/Mail/
+Inbox ~/Mail/Inbox
+Subfolders Verbatim
+
+IMAPStore n11-remote
+Account n11
+
+Channel n11-inbox
+Master :n11-remote:
+Slave :n11-local:
+
+Channel n11-sent
+Master :n11-remote:"\Sent"
+Slave :n11-local:sent
+
+Group n11
+Channel n11-inbox
+Channel n11-sent
