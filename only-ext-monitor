@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "Switching to use external monitor *only*. [ret] to continue"
+read
+
+# Turn off laptop display
+xrandr --output eDP-1 --off
+
+# Reset polybar
+polybar-msg cmd restart
