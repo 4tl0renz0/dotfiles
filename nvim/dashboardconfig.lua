@@ -21,14 +21,14 @@ dashboard.custom_header = {
 dashboard.custom_center = {
   {
     icon = "  ",
-    desc = "Find  File                              ",
+    desc = "Find File                              ",
     action = "Telescope find_files",
     shortcut = "<Leader> f f",
   },
   {
     icon = "  ",
-    desc = "Recently opened files                   ",
-    action = "Leaderf mru --popup",
+    desc = "Recent Files                           ",
+    action = "Telescope oldfiles",
     shortcut = "<Leader> f r",
   },
   {

@@ -28,6 +28,32 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 	Plug 'sam4llis/nvim-tundra'
 	Plug 'nvim-lualine/lualine.nvim'
 	Plug 'vimsence/vimsence'
+	Plug 'nvim-tree/nvim-web-devicons' " Recommended (for coloured icons)
+	" Plug 'ryanoasis/vim-devicons' Icons without colours
+	Plug 'akinsho/bufferline.nvim', { 'tag': 'v3.*' }
+	Plug 'lewis6991/gitsigns.nvim'
+
+	Plug 'neovim/nvim-lspconfig'
+	Plug 'hrsh7th/cmp-nvim-lsp'
+	Plug 'hrsh7th/cmp-buffer'
+	Plug 'hrsh7th/cmp-path'
+	Plug 'hrsh7th/cmp-cmdline'
+	Plug 'hrsh7th/nvim-cmp'
+
+	" For vsnip users.
+	Plug 'hrsh7th/cmp-vsnip'
+	Plug 'hrsh7th/vim-vsnip'
+
+" For luasnip users.
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+
+	Plug 'williamboman/mason.nvim'
+	Plug 'williamboman/mason-lspconfig.nvim'
+	Plug 'neovim/nvim-lspconfig'
+
+	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 call plug#end()
 
 " General
@@ -40,6 +66,12 @@ set noshowmode
 "
 "	Plugin Config
 "
+
+" Config: cmp
+luafile ~/.config/nvim/cmp.lua
+
+" Config: gitsigns
+luafile ~/.config/nvim/gitsigns.lua
 
 " Config: TokyoNight
 let g:tokyonight_style = "night"
@@ -109,6 +141,8 @@ luafile ~/.config/nvim/dashboardconfig.lua
 " Config: Vim-airline
 let g:airline#extensions#tabline#enabled = 1
 
+" Config: bufferline.nvim
+luafile ~/.config/nvim/bufferline.lua
 
 " Config: vim-airline symbols
 if !exists('g:airline_symbols')
