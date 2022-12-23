@@ -2,24 +2,60 @@
 #
 # install script
 
-[ -d "~/.config/nvim" ] && cp init.vim ~/.config/nvim/init.vim || mkdir ~/.config/nvim && cp init.vim ~/.config/nvim/init.vim
-cp config.neomuttrc ~/.neomuttrc
-mkdir ~/.mutt
-echo 'Make sure to setup neomutt with your email account!'
+# Text color variables
+txtund=$(tput sgr 0 1)    # Underline
+txtbld=$(tput bold)       # Bold
+txtred=$(tput setaf 1)    # Red
+txtgrn=$(tput setaf 2)    # Green
+txtylw=$(tput setaf 3)    # Yellow
+txtblu=$(tput setaf 4)    # Blue
+txtpur=$(tput setaf 5)    # Purple
+txtcyn=$(tput setaf 6)    # Cyan
+txtwht=$(tput setaf 7)    # White
+txtrst=$(tput sgr0)       # Text reset
 
-echo 'Installing vim-plug. [ret] to continue.'
+CONFIG="$HOME/.config"
+
+echo "Installing packages. Your password may be needed."
+
+echo "Non-development packages. [ret] to continue"
+read
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt install neovim neomutt isync msmtp mpd i3 neofetch tree gource polybar
+
+while true; do
+    read -p "Do you want to install development packages?" yn
+    case $yn in
+        [Yy]* ) sudo apt update; sudo apt install mtools xorriso qemu qemu-system ovmf build-essential nasm bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo cmake ninja-build git-email git neomutt;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+echo "Installing dotfiles."
+echo "${txtblu}[neovim]${txtrst} cp nvim/* ~/.config/nvim/"
+[ -d "$CONFIG/nvim" ] && cp nvim/* $CONFIG/nvim/ || mkdir $CONFIG/nvim && cp nvim/* $CONFIG/nvim/
+echo "${txtblu}[neomutt]${txtrst} cp .neomuttrc ~/.neomuttrc"
+cp .neomuttrc $HOME/.neomuttrc
+mkdir ~/.mutt
+echo "${txtylw}Make sure to setup neomutt with your email account!${txtrst}"
+echo "${txtblu}[git]${txtrst} cp .gitconfig ~/.gitconfig"
+cp .gitconfig $HOME/.gitconfig
+echo "${txtylw}Make sure to configure GPG and email settings for git send-email!${txtrst}"
+echo "${txtblu}[neovim]${txtrst} Installing vim-plug. [ret] to continue."
 read
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
 nvim -c 'PlugInstall' \
 	 -c 'qa!'
-	 
-echo 'Installing gum. [ret] to continue.'
-read
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
-echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
-sudo apt update && sudo apt install gum
-	 
-echo 'Installed dotfiles!'
+echo "${txtblu}[i3]${txtrst} cp i3/* ~/.config/i3/"
+[ -d "$CONFIG/i3" ] && cp i3/* $CONFIG/i3/ || mkdir $CONFIG/i3 && cp i3/* $CONFIG/i3/
+echo "${txtblu}[polybar]${txtrst} cp polybar/* ~/.config/polybar/"
+[ -d "$CONFIG/polybar" ] && cp polybar/* $CONFIG/polybar/ || mkdir $CONFIG/polybar && cp polybar/* $CONFIG/polybar/
+echo "${txtblu}[ncmpcpp]${txtrst} cp ncmpcpp/* ~/.config/ncmpcpp/"
+[ -d "$CONFIG/ncmpcpp" ] && cp ncmpcpp/* $CONFIG/ncmpcpp/ || mkdir $CONFIG/ncmpcpp && cp ncmpcpp/* $CONFIG/ncmpcpp/
+echo "${txtblu}[mpd]${txtrst} cp mpd/* ~/.config/mpd/"
+[ -d "$CONFIG/mpd" && cp mpd/* $CONFIG/mpd/ || mkdir $CONFIG/mpd && cp mpd/* $CONFIG/mpd/
+
+
+echo "Completed!"
