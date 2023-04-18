@@ -1,10 +1,10 @@
 [user]
-	email = aristonl@n11.dev
+	email = me@ariston.dev
 	name = Ariston Lorenzo
-	signingkey = 
+	signingKey = B9109165B330050F
 
 [core]
-	editor = nvim
+	editor = ng
 [credential "https://github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
@@ -24,33 +24,3 @@
 	gpgSign = true
 [pull]
 	rebase = false
-
-[core]
-    pager = delta
-
-[interactive]
-    diffFilter = delta --color-only
-
-[delta]
-    navigate = true    # use n and N to move between diff sections
-	light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
-	features = decorations
-	line-numbers = true
-
-[delta "interactive"]
-    keep-plus-minus-markers = false
-
-[delta "decorations"]
-    commit-decoration-style = blue ol
-    commit-style = raw
-    file-style = omit
-    hunk-header-decoration-style = blue box
-    hunk-header-file-style = red
-    hunk-header-line-number-style = "#067a00"
-    hunk-header-style = file line-number syntax
-
-[merge]
-    conflictstyle = diff3
-
-[diff]
-    colorMoved = default
