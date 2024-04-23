@@ -19,18 +19,10 @@ CONFIG="$HOME/.config"
 echo "Installing packages. Your password may be needed."
 
 echo "Non-development packages. [ret] to continue"
-read
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt install neovim neomutt isync msmtp mpd i3 neofetch tree gource polybar
 
-while true; do
-    read -p "Do you want to install development packages?" yn
-    case $yn in
-        [Yy]* ) sudo apt update; sudo apt install mtools xorriso qemu qemu-system ovmf build-essential nasm bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo cmake ninja-build git-email git neomutt;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+sudo apt update; sudo apt install mtools xorriso qemu qemu-system ovmf build-essential nasm bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo cmake ninja-build git-email git neomutt;;
 
 echo "Installing dotfiles."
 echo "${txtblu}[neovim]${txtrst} cp nvim/* ~/.config/nvim/"
